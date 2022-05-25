@@ -1,8 +1,6 @@
 from passwordstrengthchecker import passwordcheck as pc
-import os
 
 tilda = ["~"]
-filedir = os.getcwd() + "\logins.txt"
 
 def menu():
 
@@ -18,6 +16,15 @@ def menu():
             print("##############################################\nTildas '~' aren't accepted in usernames please re-register")
             menu()
         else:
+            file = open('logins.txt','r')
+            logins = file.readlines()
+            for i in range(len(logins)):
+                string = logins[i].split("~")
+                if string[0] == username:
+                    print("##############################################\nThis username allready exists! Please enter another")
+                    menu()
+            file.close()
+
             password = str(input("##############################################\nPlease enter a password:\n##############################################\n"))
             matched_list = [characters in tilda for characters in username]
             string_contains_tilda = all(matched_list)
@@ -28,10 +35,8 @@ def menu():
 
                 strength = pc(password)
 
-                print(strength)
-
                 if strength == "Strong" or strength == "Medium":
-                    f = open(filedir, "a")
+                    f = open("logins.txt", "a")
                     f.write("\n")
                     f.write(username)
                     f.write("~")
@@ -40,7 +45,6 @@ def menu():
                 else:
                     print("##############################################\nYour password doesn't meet our requirements please re-register")
                     menu()
-            
             
     elif choice == 3:
         print("##############################################\nThanks for using the area trainer!\n##############################################\n")

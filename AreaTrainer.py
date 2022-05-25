@@ -7,9 +7,25 @@ def menu():
     choice = int(input("##############################################\nPlease select your option from the list below:\n1. Login\n2. Register\n3. Quit\n##############################################\n"))
 
     if choice == 1:
-        print("choice 1")
+        username = str(input("##############################################\nPlease enter your username:\n##############################################\n"))
+        file = open('logins.txt','r')
+        logins = file.readlines()
+        for i in range(len(logins)):
+            string = logins[i].split("~")
+            string[1] = string[1].strip("\n")
+            if string[0] == username:
+                password = str(input("##############################################\nPlease enter your password:\n##############################################\n"))
+                if string[1] == password:
+                    shapemen()
+                    break
+                else:
+                    print("##############################################\nPassword Incorrect")
+                    menu()
+        file.close()
+
+    
     elif choice == 2:
-        username = str(input("##############################################\nPlease enter a user name:\n##############################################\n"))
+        username = str(input("##############################################\nPlease enter a username:\n##############################################\n"))
         matched_list = [characters in tilda for characters in username]
         string_contains_tilda = all(matched_list)
         if string_contains_tilda == True:
@@ -21,7 +37,7 @@ def menu():
             for i in range(len(logins)):
                 string = logins[i].split("~")
                 if string[0] == username:
-                    print("##############################################\nThis username allready exists! Please enter another")
+                    print("##############################################\nThis username already exists! Please enter another")
                     menu()
             file.close()
 
@@ -52,5 +68,8 @@ def menu():
     else:
         print("##############################################\nUnable to load page\nPlease enter a valid integer 1 - 3")
         menu()
-    
+
+def shapemen():
+    choice = int(input("##############################################\nPlease select your option from the list below:\n1.  /\  Triangle\n   /  \ \n  /____\ \n2._____Rectangle\n  |    |\n  |____|\n3. Circle\n##############################################\n"))
+
 menu()

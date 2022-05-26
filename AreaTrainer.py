@@ -70,6 +70,17 @@ def menu():
         menu()
 
 def shapemen():
-    choice = int(input("##############################################\nPlease select your option from the list below:\n1.  /\  Triangle\n   /  \ \n  /____\ \n2._____Rectangle\n  |    |\n  |____|\n3. Circle\n##############################################\n"))
-
+    choice = int(input("##############################################\nPlease select your option from the list below:\n1. Triangle\n2. Rectangle\n3. Circle\n4. Quit (Logout)\n##############################################\n"))
+    if choice == 1:
+        print("Triangle")
+    elif choice == 2:
+        print("Rectangle")
+    elif choice == 3:
+        print("Circle")
+    elif choice == 4:
+        print("##############################################\nSuccesfully logged out!\nThanks for using the area trainer!\n##############################################\n")
+        exit()
+    else:
+        print("##############################################\nUnable to load page\nPlease enter a valid integer 1 - 3")
+        shapemen()
 menu()

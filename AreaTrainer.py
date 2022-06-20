@@ -1,7 +1,6 @@
 import random
 import math
 
-from matplotlib import widgets
 from passwordstrengthchecker import passwordcheck as pc
 
 tilda,possanswers = ["~"],[1,2,3,4]
@@ -31,7 +30,7 @@ def menu():
     elif choice == 2:
         username = str(input("##############################################\nPlease enter a username:\n##############################################\n"))
         matched_list = [characters in tilda for characters in username]
-        string_contains_tilda = all(matched_list)
+        string_contains_tilda = any(matched_list)
         if string_contains_tilda == True:
             print("##############################################\nTildas '~' aren't accepted in usernames please re-register")
             menu()
@@ -46,8 +45,8 @@ def menu():
             file.close()
 
             password = str(input("##############################################\nPlease enter a password:\n##############################################\n"))
-            matched_list = [characters in tilda for characters in username]
-            string_contains_tilda = all(matched_list)
+            matched_list = [characters in tilda for characters in password]
+            string_contains_tilda = any(matched_list)
             if string_contains_tilda == True:
                 print("##############################################\nTildas '~' aren't accepted in passwords please re-register")
                 menu()

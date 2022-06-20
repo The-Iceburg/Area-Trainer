@@ -3,7 +3,7 @@ import math
 
 from passwordstrengthchecker import passwordcheck as pc
 
-tilda,possanswers = ["~"],[1,2,3,4]
+possanswers = [1,2,3,4]
 
 def menu():
 
@@ -29,7 +29,7 @@ def menu():
     
     elif choice == 2:
         username = str(input("##############################################\nPlease enter a username:\n##############################################\n"))
-        matched_list = [characters in tilda for characters in username]
+        matched_list = [characters in ["~"] for characters in username]
         string_contains_tilda = any(matched_list)
         if string_contains_tilda == True:
             print("##############################################\nTildas '~' aren't accepted in usernames please re-register")
@@ -45,7 +45,7 @@ def menu():
             file.close()
 
             password = str(input("##############################################\nPlease enter a password:\n##############################################\n"))
-            matched_list = [characters in tilda for characters in password]
+            matched_list = [characters in ["~"] for characters in password]
             string_contains_tilda = any(matched_list)
             if string_contains_tilda == True:
                 print("##############################################\nTildas '~' aren't accepted in passwords please re-register")

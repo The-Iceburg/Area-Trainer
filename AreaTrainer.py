@@ -4,9 +4,10 @@ import math
 from passwordstrengthchecker import passwordcheck as pc
 
 possanswers = [1,2,3,4]
+score = 0
 
 def menu():
-
+    global username
     choice = int(input("##############################################\nPlease select your option from the list below:\n1. Login\n2. Register\n3. Quit\n##############################################\n"))
 
     if choice == 1:
@@ -66,13 +67,17 @@ def menu():
                     menu()
             
     elif choice == 3:
-        print("##############################################\nThanks for using the area trainer!\n##############################################\n")
-        exit()
+        exit_routine()
+    elif choice == 4:
+        shapemen()
+
     else:
         print("##############################################\nUnable to load page\nPlease enter a valid integer 1 - 3")
         menu()
 
 def shapemen():
+    global score
+    print(score)
     choice = int(input("##############################################\nPlease select your option from the list below:\n1. Triangle △\n2. Rectangle ▯\n3. Circle ○\n4. Quit (Logout)\n##############################################\n"))
     if choice == 1:
 
@@ -94,10 +99,29 @@ def shapemen():
         possanswers[answerno] = answer
 
         question = int(input("##############################################\n△ - Triangle\n\nPerpendicular Height = " + str(perpheight) +"\nWidth = " + str(width) + "\n\n1. " + str(possanswers[0])+ " 2. " + str(possanswers[1]) + " 3. " + str(possanswers[2]) + " 4. " + str(possanswers[3]) + "\n##############################################\n"))
-        if question == answerno + 1:
-            print("correct")
+        
+        attempt = 1
+        for i in range(2):
+            if question == answerno + 1 and attempt == 1:
+                print("correct")
+                score += 2
+                break
+            elif question == answerno + 1 and attempt == 2:
+                print("correct")
+                score += 1
+            else:
+                attempt = 2
+                print("incorrect")
+                question = int(input("Try again: "))
+        again = int(input("Would you like to go again?\n1. Yes\n2. No\n"))
+        if again == 1:
+            shapemen()
         else:
-            print("incorrect")
+            save_score()
+        
+
+
+                
 
     elif choice == 2:
         
@@ -118,11 +142,28 @@ def shapemen():
         possanswers[answerno] = answer
 
         question = int(input("##############################################\n▯ - Rectangle\n\nWidth = " + str(width) +"\nHeight = " + str(height) +"\n\n1. " + str(possanswers[0])+ " 2. " + str(possanswers[1]) + " 3. " + str(possanswers[2]) + " 4. " + str(possanswers[3]) + "\n##############################################\n"))
-        if question == answerno + 1:
-            print("correct")
+        
+        attempt = 1
+        for i in range(2):
+            if question == answerno + 1 and attempt == 1:
+                print("correct")
+                score += 2
+                break
+            elif question == answerno + 1 and attempt == 2:
+                print("correct")
+                score += 1
+            else:
+                attempt = 2
+                print("incorrect")
+                question = int(input("Try again: "))
+        
+        again = int(input("Would you like to go again?\n1. Yes\n2. No\n"))
+        if again == 1:
+            shapemen()
         else:
-            print("incorrect")
-
+            save_score()
+            
+        
     elif choice == 3:
         
         radius = random.randint(2,15)
@@ -142,15 +183,69 @@ def shapemen():
         possanswers[answerno] = answer
 
         question = int(input("##############################################\n○ - Circle\n\nRadius = " + str(radius) +"\n\n1. " + str(possanswers[0])+ " 2. " + str(possanswers[1]) + " 3. " + str(possanswers[2]) + " 4. " + str(possanswers[3]) + "\n\nGive your answer rounded to 2.dp\n##############################################\n"))
-        if question == answerno + 1:
-            print("correct")
+        
+        attempt = 1
+        for i in range(2):
+            if question == answerno + 1 and attempt == 1:
+                print("correct")
+                score += 2
+                break
+            elif question == answerno + 1 and attempt == 2:
+                print("correct")
+                score += 1
+            else:
+                attempt = 2
+                print("incorrect")
+                question = int(input("Try again: "))
+        
+        again = int(input("Would you like to go again?\n1. Yes\n2. No\n"))
+        if again == 1:
+            shapemen()
         else:
-            print("incorrect")
+            save_score()
 
     elif choice == 4:
-        print("##############################################\nSuccesfully logged out!\nThanks for using the area trainer!\n##############################################\n")
-        exit()
+        print("##############################################\nSuccesfully logged out!\n##############################################\n")
+        exit_routine()
     else:
         print("##############################################\nUnable to load page\nPlease enter a valid integer 1 - 3")
         shapemen()
+
+def save_score():
+    score_list = {}
+    f = open("scores.txt","r").read()
+    score_list = eval(f)
+
+    f = open("scores.txt", "w")
+    value = score_list.get(username)
+    if value == None:
+        value = []
+    value.append(score)
+    score_list.update({username: value})
+
+    f.write(str(score_list))
+    f.close()
+    
+    exit_routine()
+
+
+def exit_routine():
+    global score
+    print(f"You current score is {score}")
+    while True:
+        choice = int(input("1. Start Again?\n2. See Previous Scores\n3. Quit\n"))
+        if choice == 1:
+            score = 0
+            shapemen()
+        elif choice == 2:
+            score_list = {}
+            f = open("scores.txt","r").read()
+            score_list = eval(f)
+            value = score_list.get(username)
+            print(f"Your previous scores are {value}")
+            
+        else:
+            print("##############################################\nThanks for using the area trainer!\n##############################################\n")
+            exit()
+
 menu()

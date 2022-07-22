@@ -1,5 +1,7 @@
 import random
 import math
+from os.path import exists
+
 
 from passwordstrengthchecker import passwordcheck as pc
 
@@ -212,6 +214,17 @@ def shapemen():
         shapemen()
 
 def save_score():
+
+    file_exists = exists("scores.txt")
+    if not file_exists:
+        f = open("scores.txt", "w")
+        f.write("{}")
+    f = open("scores.txt", "r+")
+    scoreContent = f.read()
+    if scoreContent == "":
+        f.write("{}")
+    
+    
     score_list = {}
     f = open("scores.txt","r").read()
     score_list = eval(f)
